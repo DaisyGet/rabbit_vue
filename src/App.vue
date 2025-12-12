@@ -6,7 +6,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 <template>
   <!-- 一级路由的出口 -->
   <RouterView />
-  <div class="test">test自动导入</div>
+  <!-- <div class="test">test自动导入</div> -->
 </template>
 
 <style scoped lang="scss">

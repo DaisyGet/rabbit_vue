@@ -31,8 +31,8 @@ export default defineConfig({
         // 自动导入定制化样式文件进行样式覆盖
         // 注意：不要在这里自动导入 `common.scss`，否则当编译 `common.scss` 自身时会导致自引用循环。
         additionalData: `
-          @use "@/styles/var.scss" as *;
           @use "@/styles/element/index.scss" as *;
+          @use "@/styles/var.scss" as *; 
         `,
       },
     },

@@ -1,3 +1,1 @@
-<template>
-  <H1> hi,login</H1>
-</template>
+<template>hi,login</template>
