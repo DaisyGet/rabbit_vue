@@ -1,4 +1,15 @@
-<script setup></script>
+<script setup>
+import { getcategoryapi } from "@/api/layout.js";
+import { ref, onMounted } from "vue";
+
+const category = ref([]);
+const getcategory = async () => {
+  const res = await getcategoryapi();
+  category.value = res.result;
+};
+
+onMounted(() => getcategory());
+</script>
 
 <template>
   <header class="app-header">
@@ -7,12 +18,9 @@
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+        <li v-for="item in category" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
-        <li><RouterLink to="/">居家</RouterLink></li>
-        <li><RouterLink to="/">美食</RouterLink></li>
-        <li><RouterLink to="/">服饰</RouterLink></li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
