@@ -1,44 +1,9 @@
 <script setup>
-import { gettopcategoryapi } from "@/api/category";
-import { getbannerapi } from "@/api/banner";
-import { ref, onMounted, watch } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import GoodsItem from "@/views/home/components/GoodsItem.vue";
-const categorydata = ref({});
-const route = useRoute();
-
-const gettopcategory = async (id) => {
-  const res = await gettopcategoryapi(id);
-  categorydata.value = res.result;
-};
-
-const banner = ref([]);
-
-const getbanner = async () => {
-  const res = await getbannerapi({
-    distributionSite: "2",
-  });
-  banner.value = res.result;
-};
-
-onMounted(() => {
-  gettopcategory(route.params.id);
-  getbanner();
-});
-
-// 监听路由参数变化，重新获取数据
-// watch(
-//   () => route.params.id,
-//   (newId) => {
-//     if (newId) {
-//       gettopcategory(newId);
-//     }
-//   }
-// );
-onBeforeRouteUpdate((to) => {
-  gettopcategory(to.params.id);
-  // console.log(to.params.id);
-});
+import { usebanner } from "./component/usebanner";
+import { usecategory } from "./component/usecategory";
+const { banner } = usebanner();
+const { categorydata } = usecategory();
 </script>
 
 <template>
@@ -54,16 +19,17 @@ onBeforeRouteUpdate((to) => {
       <div class="home-banner">
         <el-carousel height="500px">
           <el-carousel-item v-for="item in banner" :key="item.id">
-            <img :src="item.imgUrl" alt="" />
+            <img v-img-lazy="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
       </div>
+      <!-- 列表渲染 -->
       <div class="sub-list">
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categorydata.children" :key="i.id">
             <RouterLink to="/">
-              <img :src="i.picture" />
+              <img v-img-lazy="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
           </li>
