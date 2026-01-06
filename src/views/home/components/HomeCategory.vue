@@ -140,7 +140,7 @@ const categoryStore = usecategoryStore();
           }
         }
       }
-
+      // & 是父选择器引用符，表示当前选择器的父级。在这个代码中，&:hover 等同于 li:hover
       // 关键样式  hover状态下的layer盒子变成block
       &:hover {
         .layer {
