@@ -2,7 +2,7 @@
 import { gettopcategoryapi } from "@/api/category";
 import { getbannerapi } from "@/api/banner";
 import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import GoodsItem from "@/views/home/components/GoodsItem.vue";
 const categorydata = ref({});
 const route = useRoute();
@@ -27,14 +27,18 @@ onMounted(() => {
 });
 
 // 监听路由参数变化，重新获取数据
-watch(
-  () => route.params.id,
-  (newId) => {
-    if (newId) {
-      gettopcategory(newId);
-    }
-  }
-);
+// watch(
+//   () => route.params.id,
+//   (newId) => {
+//     if (newId) {
+//       gettopcategory(newId);
+//     }
+//   }
+// );
+onBeforeRouteUpdate((to) => {
+  gettopcategory(to.params.id);
+  // console.log(to.params.id);
+});
 </script>
 
 <template>
