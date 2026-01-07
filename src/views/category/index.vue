@@ -28,7 +28,7 @@ const { categorydata } = usecategory();
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categorydata.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/subcategory/${i.id}`">
               <img v-img-lazy="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
