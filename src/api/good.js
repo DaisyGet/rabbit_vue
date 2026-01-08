@@ -5,3 +5,13 @@ export const getGoodsAPI = () => {
     url: "/home/goods",
   });
 };
+
+// 获取商品详细信息
+export const getDetail = (id) => {
+  return http({
+    url: "/goods",
+    params: {
+      id,
+    },
+  });
+};
