@@ -14,25 +14,34 @@ onMounted(() => {
   getfilterdata(route.params.id);
 });
 
-const subcategorydata = ref({});
+const subcategorydata = ref([]);
 const data = ref({
   categoryId: route.params.id,
   page: 1,
   pageSize: 20,
   sortField: "publishTime",
 });
-const getSubCategory = async (params) => {
-  const res = await getSubCategoryAPI(params);
-  subcategorydata.value = res.result;
+const getSubCategory = async () => {
+  const res = await getSubCategoryAPI(data.value);
+  subcategorydata.value = res.result.items;
 };
 onMounted(() => {
-  getSubCategory(data.value);
+  getSubCategory();
 });
 
 const tabchange = () => {
   // console.log(data.value.sortField);
   data.value.page = 1;
-  getSubCategory(data.value);
+  getSubCategory();
+};
+const disabled = ref(false);
+const load = async () => {
+  data.value.page++;
+  const res = await getSubCategoryAPI(data.value);
+  subcategorydata.value = [...subcategorydata.value, ...res.result.items];
+  if (res.result.items.length === 0) {
+    disabled.value = true;
+  }
 };
 </script>
 
@@ -54,8 +63,8 @@ const tabchange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
-        <GoodsItem v-for="good in subcategorydata.items" :goods="good" :key="good.id" />
+      <div v-infinite-scroll="load" class="body" :infinite-scroll-disabled="disabled">
+        <GoodsItem v-for="good in subcategorydata" :goods="good" :key="good.id" />
       </div>
     </div>
   </div>
