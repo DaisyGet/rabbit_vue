@@ -16,6 +16,8 @@ const enterhander = (i) => {
 };
 const left = ref(0);
 const top = ref(0);
+const positionx = ref(0);
+const positiony = ref(0);
 const target = ref(null);
 const { elementX, elementY, isOutside } = useMouseInElement(target);
 watch([elementX, elementY, isOutside], () => {
@@ -47,6 +49,8 @@ watch([elementX, elementY, isOutside], () => {
   if (elementY.value < 100) {
     top.value = 0;
   }
+  positionx.value = -left.value * 2;
+  positiony.value = -top.value * 2;
 });
 </script>
 
@@ -56,7 +60,7 @@ watch([elementX, elementY, isOutside], () => {
     <div class="middle" ref="target">
       <img :src="imageList[avtivelist]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div v-show="!isOutside" class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -74,12 +78,12 @@ watch([elementX, elementY, isOutside], () => {
       class="large"
       :style="[
         {
-          backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundImage: `url(${imageList[avtivelist]})`,
+          backgroundPositionX: `${positionx}px`,
+          backgroundPositionY: `${positiony}px`,
         },
       ]"
-      v-show="false"
+      v-show="!isOutside"
     ></div>
   </div>
 </template>
