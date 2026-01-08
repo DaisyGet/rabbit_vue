@@ -13,8 +13,7 @@ const titieMap = {
   2: "周热销榜",
 };
 
-const title = titieMap[prop.hottype];
-// const title = computed(() => titieMap[prop.hottype]); // 初始化：title = "24小时热销榜"
+const title = computed(() => titieMap[prop.hottype]); // 初始化：title = "24小时热销榜"
 
 const route = useRoute();
 const hotgood = ref([]);
