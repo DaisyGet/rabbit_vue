@@ -4,6 +4,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import DetailHot from "./component/detailhot.vue";
 import ImageView from "@/components/imgaeview/index.vue";
+import XtxGoodSku from "@/components/XtxSku/index.vue";
+
 const route = useRoute();
 const good = ref({});
 const getgood = async () => {
@@ -11,6 +13,9 @@ const getgood = async () => {
   good.value = res.result;
 };
 onMounted(() => getgood());
+const skuchange = (sku) => {
+  console.log(sku);
+};
 </script>
 
 <template>
@@ -83,7 +88,7 @@ onMounted(() => getgood());
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxGoodSku :goods="good" @change="skuchange" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
